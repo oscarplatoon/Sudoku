@@ -47,7 +47,7 @@ It's important to see that sometimes the strategies that work for us (humans) wo
 
 ## Starting Off
 
-Your program will need to take in a string like this, `"619030040270061008000047621486302079000014580031009060005720806320106057160400030"`. Note that blank spaces are written as `0`'s.
+Your program will need to take in a string like this like below. Note that blank spaces are written as `0`'s.
 ```ruby
 game = Rudoku.new("619030040270061008000047621486302079000014580031009060005720806320106057160400030")
 game.solve!
