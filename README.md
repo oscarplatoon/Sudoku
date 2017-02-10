@@ -93,6 +93,8 @@ A computer program that solves Sudoku is simulating the *player*, which means th
 ### Release 1: Code!
 This first iteration might not solve every possible Sudoku board. This means it would finish when it can no longer make a choice and "give up." We'll create the fully-featured version in the next release.
 
+You'll want to learn how to read CSV files so that you can import the `sample_ruduku_board_inputs.csv` [here](https://www.sitepoint.com/guide-ruby-csv-library-part/)
+
 **When you're done with release 1, make sure you commit your changes to have a reference point before jumping to release 2**
 
 ### Release 2: Iterate on the finished product on release 1
