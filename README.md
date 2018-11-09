@@ -50,8 +50,8 @@ It's important to see that sometimes the strategies that work for us (humans) wo
 Your program will need to take in a string like this like below. Note that blank spaces are written as `0`'s.
 ```python
 game = SudokuSolver("619030040270061008000047621486302079000014580031009060005720806320106057160400030")
-game.solve
-puts game.board
+game.solve()
+print(game.board)
 
 ```
 
@@ -72,11 +72,9 @@ And should output something like this,
 ---------------------
 ```
 
-##Releases
+### Release 0 : Modeling
 
-###Release 0 : Modeling
-
-####Modeling: Write down the nouns and verbs of the game
+#### Modeling: Write down the nouns and verbs of the game
 
 For the first iteration, we're just going build a solver that fills in "logically necessary" squares and requires no guessing.
 
@@ -92,8 +90,6 @@ A computer program that solves Sudoku is simulating the *player*, which means th
 
 ### Release 1: Code!
 This first iteration might not solve every possible Sudoku board. This means it would finish when it can no longer make a choice and "give up." We'll create the fully-featured version in the next release.
-
-
 
 **When you're done with release 1, make sure you commit your changes to have a reference point before jumping to release 2**
 
