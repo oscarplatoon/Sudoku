@@ -1,11 +1,9 @@
 # Sudoku
+Many people will spend hours in their spare time solving Sudoku problems, but by the end of this challenge you'll have a solver that can handle any valid Sudoku problem. Some of you have maybe never heard of Sudoku. If not, you should check it out [here](https://en.wikipedia.org/wiki/Sudoku).
 
-Many people will spend hours in their spare time solving Sudoku problems, but by the end of this challenge you'll have a solver that can handle any valid Sudoku problem.
-
-Some of you have maybe never heard of Sudoku. If not, you should check it out [here](https://en.wikipedia.org/wiki/Sudoku)
+As developers, we very often have to jump into unknown territory with no training. You get to jump into that this weekend with learning about Python's [CSV library](https://docs.python.org/3/library/csv.html). Don't worry if you get stuck, we'll be going over it next week as well. Maybe you want to look ahead in our curriculum to help guide you?
 
 ## Premise
-
 The idea is to fill a 9×9 grid with digits so that each column, each row, and each of the nine 3×3 sub-grids that compose the grid (also called "boxes") contains all of the digits from 1 to 9.
 
 The person who created the puzzle provides a partial solution so that some squares already have numbers. Typically, there are enough initial numbers to guarantee a unique solution.
@@ -15,7 +13,6 @@ Something that starts like this will be solved and turned into this:
 ![](http://image.slidesharecdn.com/americanpoplanguage-150127095610-conversion-gate01/95/americanpoplanguage-23-638.jpg?cb=1422352672)
 
 ## The Rules
-
 We'll use the traditional board layout/style. A puzzle is made up of:
 
 * a *spot* holds a single number 1-9
@@ -33,7 +30,6 @@ A valid solution is made up of:
 * each square, column, and row must have the numbers 1-9 in them and cannot have duplicates
 
 ## Pseudocode
-
 It is highly suggested that you try to solve this problem and model it out before jumping into the code. You can do this by asking yourself how you would solve this as a human. Take note of how you solve this problem:
 
 * What strategies are you adopting and why?
@@ -46,7 +42,6 @@ It is highly suggested that you try to solve this problem and model it out befor
 It's important to see that sometimes the strategies that work for us (humans) would be really hard to implement on a computer, and vice versa: strategies we avoid because we'd have to write too much, use too many sheets of paper, or remember too much are a cakewalk for a computer.
 
 ## Starting Off
-
 Your program will need to take in a string like this like below. Note that blank spaces are written as `0`'s.
 ```python
 game = SudokuSolver("619030040270061008000047621486302079000014580031009060005720806320106057160400030")
@@ -74,7 +69,7 @@ And should output something like this,
 
 ### Release 0 : Modeling
 
-#### Modeling: Write down the nouns and verbs of the game
+**Modeling: Write down the nouns and verbs of the game**
 
 For the first iteration, we're just going build a solver that fills in "logically necessary" squares and requires no guessing.
 
