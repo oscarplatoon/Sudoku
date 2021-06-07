@@ -32,7 +32,8 @@ class SudokuSolver:
         for row_index in range(9):
             for col_index in range(9):
                 if self.board[row_index][col_index] == 0:
-                    return row_index, col_index
+                    return (row_index, col_index)
+        return None  # if no more zeroes
 
     def is_valid(self, guess, row_index, col_index):
         # check row
@@ -61,14 +62,19 @@ class SudokuSolver:
 
         # if sudoku is solved
         if row_index is None:
-            return
+            print('sudoku is solved')
+            return True
 
         for guess in range(1, 10):
             if self.is_valid(guess, row_index, col_index):
                 self.board[row_index][col_index] = guess
-                self.solve()
-            else:
-                continue
+
+                if self.solve():
+                    return True
+
+            # self.board[row_index][col_index] = 0
+
+        return False
 
     def print_board(self):
         print("---------------------")
@@ -87,6 +93,6 @@ class SudokuSolver:
 if __name__ == "__main__":
     game = SudokuSolver()
     game.print_board()
-    game.solve()
     print()
+    game.solve()
     game.print_board()
