@@ -28,22 +28,22 @@ class SudokuSolver:
             if i % 9 == 8:
                 row_index += 1
 
-    def find_next_zero(self):
+    def find_next_zero(self, board):
         for row_index in range(9):
             for col_index in range(9):
-                if self.board[row_index][col_index] == 0:
+                if board[row_index][col_index] == 0:
                     return (row_index, col_index)
         return None  # if no more zeroes
 
-    def is_valid(self, guess, row_index, col_index):
+    def is_valid(self, guess, row_index, col_index, board):
         # check row
-        row_vals = self.board[row_index]
+        row_vals = board[row_index]
         if guess in row_vals:
             return False
 
         # check column
         for i in range(9):
-            if self.board[i][col_index] == guess:
+            if board[i][col_index] == guess:
                 return False
 
         # check 3x3 box
@@ -51,30 +51,45 @@ class SudokuSolver:
         col_index_start = col_index // 3
         for row_index_2 in range(row_index_start, row_index_start + 3):
             for col_index_2 in range(col_index_start, col_index_start + 3):
-                if self.board[row_index_2][col_index_2] == guess:
+                if board[row_index_2][col_index_2] == guess:
                     return False
 
         # if is valid
         return True
 
+    def find_valid_nums(self, row_index, col_index, board):
+        return [num for num in range(1, 10) if self.is_valid(num, row_index, col_index, board)]
+
+    def is_solved(self, board):
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] == 0:
+                    return False
+        return True
+
+    def solve_helper(self, board):
+        row_index, col_index = self.find_next_zero(board)
+
+        # Base case: if sudoku is solved, then next zero can't be found
+        if self.is_solved(board) is True:
+            return board
+
+        valid_guesses = self.find_valid_nums(row_index, col_index, board)
+
+        # Base case: if there are no valid guesses, then puzzle can't be solved
+        if len(valid_guesses) == 0:
+            return None
+
+        for guess in valid_guesses:
+            board[row_index][col_index] = guess
+            recursive_result = self.solve_helper(board)
+            if recursive_result != None:
+                return recursive_result
+
+        return None
+
     def solve(self):
-        row_index, col_index = self.find_next_zero()
-
-        # if sudoku is solved
-        if row_index is None:
-            print('sudoku is solved')
-            return True
-
-        for guess in range(1, 10):
-            if self.is_valid(guess, row_index, col_index):
-                self.board[row_index][col_index] = guess
-
-                if self.solve():
-                    return True
-
-            # self.board[row_index][col_index] = 0
-
-        return False
+        return self.solve_helper(self.board)
 
     def print_board(self):
         print("---------------------")
@@ -94,5 +109,5 @@ if __name__ == "__main__":
     game = SudokuSolver()
     game.print_board()
     print()
-    game.solve()
+    print(game.solve())
     game.print_board()
