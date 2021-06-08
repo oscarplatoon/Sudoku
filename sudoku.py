@@ -68,11 +68,11 @@ class SudokuSolver:
         return True
 
     def solve_helper(self, board):
-        row_index, col_index = self.find_next_zero(board)
-
-        # Base case: if sudoku is solved, then next zero can't be found
+        # Base case: if sudoku is solved, then return the board
         if self.is_solved(board) is True:
             return board
+
+        row_index, col_index = self.find_next_zero(board)
 
         valid_guesses = self.find_valid_nums(row_index, col_index, board)
 
@@ -80,12 +80,15 @@ class SudokuSolver:
         if len(valid_guesses) == 0:
             return None
 
+        # recursively call solve_helper with the valid guess included in the board
         for guess in valid_guesses:
             board[row_index][col_index] = guess
             recursive_result = self.solve_helper(board)
-            if recursive_result != None:
+            if recursive_result != None:  # if the guess eventually leads to a solution
                 return recursive_result
+            # else try again with next guess
 
+        # if none of the guesses lead to a solution
         return None
 
     def solve(self):
