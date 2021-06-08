@@ -1,6 +1,7 @@
 import os
 import csv
 import random
+from copy import deepcopy
 
 
 class SudokuSolver:
@@ -47,8 +48,8 @@ class SudokuSolver:
                 return False
 
         # check 3x3 box
-        row_index_start = row_index // 3
-        col_index_start = col_index // 3
+        row_index_start = (row_index // 3) * 3
+        col_index_start = (col_index // 3) * 3
         for row_index_2 in range(row_index_start, row_index_start + 3):
             for col_index_2 in range(col_index_start, col_index_start + 3):
                 if board[row_index_2][col_index_2] == guess:
@@ -68,6 +69,8 @@ class SudokuSolver:
         return True
 
     def solve_helper(self, board):
+        board = deepcopy(board)
+
         # Base case: if sudoku is solved, then return the board
         if self.is_solved(board) is True:
             return board
@@ -86,7 +89,7 @@ class SudokuSolver:
             recursive_result = self.solve_helper(board)
             if recursive_result != None:  # if the guess eventually leads to a solution
                 return recursive_result
-            # else try again with next guess
+            # else try again with next guess()
 
         # if none of the guesses lead to a solution
         return None
@@ -94,9 +97,11 @@ class SudokuSolver:
     def solve(self):
         return self.solve_helper(self.board)
 
-    def print_board(self):
+    def print_board(self, board=[]):
+        if board == []:
+            board = self.board
         print("---------------------")
-        for i, row in enumerate(self.board):
+        for i, row in enumerate(board):
             for j, num in enumerate(row):
                 print(num, end=" ")
                 if j % 9 == 8:
@@ -112,5 +117,5 @@ if __name__ == "__main__":
     game = SudokuSolver()
     game.print_board()
     print()
-    print(game.solve())
-    game.print_board()
+    board = game.solve()
+    game.print_board(board)
