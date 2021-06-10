@@ -1,0 +1,14 @@
+1.Enumerate all empty cells in typewriter order (left to right, top to bottom)
+
+2.Our “current cell” is the first cell in the enumeration.
+
+3.Enter a 1 into the current cell. If this violates the Sudoku condition, try entering a 2, then a 3, and so forth, until
+a. the entry does not violate the Sudoku condition, or until
+b. you have reached 9 and still violate the Sudoku condition.
+
+4.In case a: if the current cell was the last enumerated one, then the puzzle is solved. If not, then go back to step 2 with the “current cell” being the next cell.
+In case b: if the current cell is the first cell in the enumeration, then the Sudoku puzzle does not have a solution. If not, then erase the 9 from the corrent cell, call the previous cell in the enumeration the new “current cell”, and continue with step 3.
+
+1. create a list of indices of empty cells, you also want to store numbers attempted with the indices
+2. starting with the first cell in the list of empty cells, try 1, if zero is valid for that row/column/square, update that number in board, store the tried numbers with the indcies and move to the next empty cell in the list of empty cells. if 1 is invalid, try 2 and repeat until you try through 9. If 9 is not valid, clear tried cells for that indice go back to the last empty cell. Start with the next number not tried in the last empty cell.
+3. do the above until the you pass the end of the list of empty indices
