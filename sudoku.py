@@ -5,11 +5,31 @@ class SudokuSolver:
     self.empty_cells_and_attempts = [[i, []] for i, elem in enumerate(self.board) if elem == 0]
     print(self.empty_cells_and_attempts)
 
-  def solve(self):
-    pass
+#  current_empty_cell_index = 1
+#  while True
+#     current_attempt = last_attempt from empty cells+1 (no attempts, current_attempt = 1)
+#     while current_attempt <= 9, 
+#       if current_attempt is valid for that row/column/square, update board with current_attempt, current_empty_cell_index += 1, if no empty cells remain, you've reached a solution, return with success message
+#       else if num is invalid, store current_attempt in empty_cells list of attempts for the current indice, increment current_attempt
+#     if 9 is not not valid (you've exhausted all empty cells)
+#       if you are checking the first empty cell there is no solution, so break with a message
+#       clear list of attempts for that empty cell indice, set board[empty_cell_indice] to 0, set board of last_attempt to 0
+#       move back to last empty cell
 
-  def board(self):
-    pass
+  
+  def solve(self):
+    current_empty_cell_index = 0
+
+    for i in range(len(self.empty_cells_and_attempts)):
+     
+      if len(self.empty_cells_and_attempts[current_empty_cell_index][1]) == 0:
+        current_attempt = 1
+        current_empty_cell_index += 1
+
+      else:
+        current_attempt = self.empty_cells_and_attempts[i][1][-1] + 1
+        
+
 
   # returns an ordered list of elements in ROW_NUMBER
   # for row 0: 0,1,2,3,4,5,6,7,8
