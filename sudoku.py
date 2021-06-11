@@ -3,7 +3,6 @@ class SudokuSolver:
   def __init__(self, board_string):
     self.board = [int(i) for i in board_string]
     self.empty_cells_and_attempts = [[i, []] for i, elem in enumerate(self.board) if elem == 0]
-    print(self.empty_cells_and_attempts)
 
 #  current_empty_cell_index = 1
 #  while True
@@ -18,16 +17,25 @@ class SudokuSolver:
 
   
   def solve(self):
-    current_empty_cell_index = 0
+    pass
+    # Set current_cell_to_guess = 0
+    # this will be used to track the current_guess
+    # Loop through the list of empty cells iteratively (as tracked by current_cell_to_guess) until the last cell's guess is valid
+        # 1. For the current_cell_to_guess, get current_attempt (equals last value in current_attempt+1)
+        # 2. If current_attempt < 10, continue, else delete all attempts from current_cell_to_guess, and decrement current_cell_to_guess to go back to the last guess, unless you are on current_cell_guess[0], then quit with error that the puzzle is unsolvable
+        # 2. append current_attempt to self.empty_cells_and_attempts[current_cell_guess]
+        # 3. Check row, column, and square for current cell and current attempt
+        # 4. if valid, update board and increment current_cell_to_guess
+        # 5. current_attempt is invalid, return to 1 
+  
 
-    for i in range(len(self.empty_cells_and_attempts)):
-     
-      if len(self.empty_cells_and_attempts[current_empty_cell_index][1]) == 0:
-        current_attempt = 1
-        current_empty_cell_index += 1
+    # current_empty_cell_index = 0
 
-      else:
-        current_attempt = self.empty_cells_and_attempts[i][1][-1] + 1
+    # if len(self.empty_cells_and_attempts[current_empty_cell_index][1]) == 0:
+    #     current_attempt = 1
+
+    # else:
+    #   current_attempt = self.empty_cells_and_attempts[i][1][-1] + 1
         
 
 
@@ -102,9 +110,21 @@ class SudokuSolver:
         output_string += '-----------------------\n'
     return output_string
   
+  def get_next_attempt(self, index):
+    if len(self.empty_cells_and_attempts[index][1]) == 0:
+        current_attempt = 1
+        self.empty_cells_and_attempts[index][1].append(current_attempt)
+        return current_attempt
+    elif len(self.empty_cells_and_attempts[index][1]) == 9:
+      return None
+    else:
+      current_attempt = self.empty_cells_and_attempts[index][1][-1] + 1
+      self.empty_cells_and_attempts[index][1].append(current_attempt)
+      return current_attempt
 
-# my_solver = SudokuSolver('003020600900305001001806400008102900700000008006708200002609500800203009005010300')
-# print(my_solver)
+
+my_solver = SudokuSolver('003020600900305001001806400008102900700000008006708200002609500800203009005010300')
+print(my_solver)
 # The file has newlines at the end of each line, so we call
 # String#chomp to remove them.
 # game = SudokuSolver(board_string)
@@ -112,3 +132,14 @@ class SudokuSolver:
 # game.solve
 
 # print(game.board)
+# print(my_solver.get_next_attempt(0))
+# print(my_solver.get_next_attempt(0))
+# print(my_solver.get_next_attempt(0))
+# print(my_solver.get_next_attempt(0))
+# print(my_solver.get_next_attempt(0))
+# print(my_solver.get_next_attempt(0))
+# print(my_solver.get_next_attempt(0))
+# print(my_solver.get_next_attempt(0))
+# print(my_solver.get_next_attempt(0))
+# print(my_solver.get_next_attempt(0))
+# print(my_solver.empty_cells_and_attempts)

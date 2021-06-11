@@ -1,0 +1,2 @@
+need a method to get next number to attempts
+need a method to clear all attempts
