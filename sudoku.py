@@ -13,9 +13,10 @@ class SudokuSolver:
     
     index_of_current_empty_cell_to_guess = 0
     # while True:
-    for i in range(1000):
+    for i in range(10000):
       current_attempt = self.get_next_attempt(index_of_current_empty_cell_to_guess)
-      
+      current_board_index = self.empty_cells_and_attempts[index_of_current_empty_cell_to_guess][0]
+
       if current_attempt == None:
         if index_of_current_empty_cell_to_guess == 0:
           print("This puzzle has no solution")
@@ -24,11 +25,11 @@ class SudokuSolver:
           self.clear_all_attempts(index_of_current_empty_cell_to_guess)
           index_of_current_empty_cell_to_guess -= 1
       # if you go back to the last cell because this one was invalid, you need to clear its guess from the board
+          self.board[current_board_index] = 0
           continue
       
-      current_board_index = self.empty_cells_and_attempts[index_of_current_empty_cell_to_guess][0]
-
-      current_row_indice = self.get_row_number_from_indice(current_board_index)
+    
+      current_row_indice = self.get_row_index_from_indice(current_board_index)
       current_column_indice = self.get_column_number_from_indice(current_board_index)
       current_square_indice = self.get_square_number_from_indice(current_board_index)
 
@@ -38,16 +39,15 @@ class SudokuSolver:
 
 
       if not self.check_row(current_row_list, current_attempt) and not self.check_column(current_column_list, current_attempt) and not self.check_square(current_square_list, current_attempt):
-        index_to_update = self.empty_cells_and_attempts[index_of_current_empty_cell_to_guess][0]
-        self.board[index_to_update] = current_attempt
+
+        self.board[current_board_index] = current_attempt
         if index_of_current_empty_cell_to_guess != len(self.empty_cells_and_attempts)-1:
           index_of_current_empty_cell_to_guess += 1
         else:
           print("Puzzle solved!!!")
-          print(my_solver)
           return True
           
-    print(self.board)
+
       # print(f"current attempt {current_attempt}, current_cell: {self.empty_cells_and_attempts[index_of_current_empty_cell_to_guess][0]}")
 
     # Set current_cell_to_guess = 0
@@ -61,21 +61,22 @@ class SudokuSolver:
         # 5. current_attempt is invalid, return to 1 
   
 
-  # returns an ordered list of elements in ROW_NUMBER
+  # returns an ordered list of elements in row_index
   # for row 0: 0,1,2,3,4,5,6,7,8
   # for row 1: 9,10,11,12,13,14,15,16,17
-  def get_row(self, row_number):
+  def get_row(self, row_index):
     output_row = []
-    for i in range(row_number*9, (row_number*9)+9):
+
+    for i in range (row_index,  row_index+9):
       output_row.append(self.board[i])
     return output_row
 
   # returns an ordered list of elements in COLUMN_NUMBER
   # for column 0: 0,9,18,27,36,45,54,63,72
   # for column 1: 1,10,19,28,37,46,55,64,73
-  def get_column(self, column_number):
+  def get_column(self, column_index):
     output_column = []
-    for i in range(column_number, column_number+73, 9):
+    for i in range(column_index, column_index+73, 9):
       output_column.append(self.board[i])
     return output_column
 
@@ -189,7 +190,7 @@ class SudokuSolver:
 
   # takes an an index anywhere on the board and returns the leading character in that index's row
   # returns None if the indice isn't found
-  def get_row_number_from_indice(self, cell_index):
+  def get_row_index_from_indice(self, cell_index):
     for row_list_index in self.row_indices:
       try:
         if row_list_index.index(cell_index) >= 0:
@@ -223,8 +224,12 @@ my_solver = SudokuSolver('003020600900305001001806400008102900700000008006708200
 print(my_solver)
 
 my_solver.solve()
+print(my_solver)
 # The file has newlines at the end of each line, so we call
 # String#chomp to remove them.
 # game = SudokuSolver(board_string)
 # # Remember: this will just fill out what it can and not "guess"
 # game.solve
+# print(my_solver.get_row(18))
+# print(my_solver.get_column(5))
+# print(my_solver.get_square(57))
