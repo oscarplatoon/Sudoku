@@ -5,16 +5,51 @@ class SudokuSolver:
   def __init__(self, board_string):
     self.board = [int(i) for i in board_string]
     self.empty_cells_and_attempts = [[i, []] for i, elem in enumerate(self.board) if elem == 0]
-
+    self.square_indices = self.read_in_square_indices()
+    self.row_indices = self.read_in_row_indices()
+    self.column_indices = self.read_in_column_indices()
   
   def solve(self):
     
-    index_of_current_cell_to_guess = 0
-    while True:
-      current_attempt = self.get_next_attempt(index_of_current_cell_to_guess)
+    index_of_current_empty_cell_to_guess = 0
+    # while True:
+    for i in range(1000):
+      current_attempt = self.get_next_attempt(index_of_current_empty_cell_to_guess)
       
-      # print(f"current attempt {current_attempt}, current_cell: {self.empty_cells_and_attempts[index_of_current_cell_to_guess][0]}")
-      break
+      if current_attempt == None:
+        if index_of_current_empty_cell_to_guess == 0:
+          print("This puzzle has no solution")
+          return None
+        else:
+          self.clear_all_attempts(index_of_current_empty_cell_to_guess)
+          index_of_current_empty_cell_to_guess -= 1
+      # if you go back to the last cell because this one was invalid, you need to clear its guess from the board
+          continue
+      
+      current_board_index = self.empty_cells_and_attempts[index_of_current_empty_cell_to_guess][0]
+
+      current_row_indice = self.get_row_number_from_indice(current_board_index)
+      current_column_indice = self.get_column_number_from_indice(current_board_index)
+      current_square_indice = self.get_square_number_from_indice(current_board_index)
+
+      current_row_list = self.get_row(current_row_indice)
+      current_column_list = self.get_column(current_column_indice)
+      current_square_list = self.get_square(current_square_indice)
+
+
+      if not self.check_row(current_row_list, current_attempt) and not self.check_column(current_column_list, current_attempt) and not self.check_square(current_square_list, current_attempt):
+        index_to_update = self.empty_cells_and_attempts[index_of_current_empty_cell_to_guess][0]
+        self.board[index_to_update] = current_attempt
+        if index_of_current_empty_cell_to_guess != len(self.empty_cells_and_attempts)-1:
+          index_of_current_empty_cell_to_guess += 1
+        else:
+          print("Puzzle solved!!!")
+          print(my_solver)
+          return True
+          
+    print(self.board)
+      # print(f"current attempt {current_attempt}, current_cell: {self.empty_cells_and_attempts[index_of_current_empty_cell_to_guess][0]}")
+
     # Set current_cell_to_guess = 0
     # this will be used to track the current_guess
     # Loop through the list of empty cells iteratively (as tracked by current_cell_to_guess) until the last cell's guess is valid
@@ -112,14 +147,10 @@ class SudokuSolver:
   def clear_all_attempts(self, index):
     self.empty_cells_and_attempts[index][1] = []
 
-  #takes in a cell number and returns the row number
-  def get_row_number_from_cell(self, index):
-    pass
-
   def read_in_row_indices(self):
     row_indices_list = []
     my_path = os.path.abspath(os.path.dirname(__file__))
-    path = os.path.join(my_path, "row_indices.csv")
+    path = os.path.join(my_path, "./data/row_indices.csv")
 
     with open(path, mode = 'r', encoding='utf-8-sig') as csvfile:
       reader = csv.reader(csvfile)
@@ -132,7 +163,7 @@ class SudokuSolver:
   def read_in_column_indices(self):
     column_indices_list = []
     my_path = os.path.abspath(os.path.dirname(__file__))
-    path = os.path.join(my_path, "column_indices.csv")
+    path = os.path.join(my_path, "./data/column_indices.csv")
 
     with open(path, mode = 'r', encoding='utf-8-sig') as csvfile:
       reader = csv.reader(csvfile)
@@ -145,24 +176,55 @@ class SudokuSolver:
   def read_in_square_indices(self):
     square_indices_list = []
     my_path = os.path.abspath(os.path.dirname(__file__))
-    path = os.path.join(my_path, "square_indices.csv")
+    path = os.path.join(my_path, "./data/square_indices.csv")
 
     with open(path, mode = 'r', encoding='utf-8-sig') as csvfile:
       reader = csv.reader(csvfile)
       for row in reader:
         row = [int(i) for i in row]
         square_indices_list.append(row)
+
     
     return square_indices_list
 
+  # takes an an index anywhere on the board and returns the leading character in that index's row
+  # returns None if the indice isn't found
+  def get_row_number_from_indice(self, cell_index):
+    for row_list_index in self.row_indices:
+      try:
+        if row_list_index.index(cell_index) >= 0:
+          return row_list_index[0]
+      except ValueError:
+        pass
+
+    return None
+
+  def get_column_number_from_indice(self, cell_index):
+    for column_list_index in self.column_indices:
+      try:
+        if column_list_index.index(cell_index) >= 0:
+          return column_list_index[0]
+      except ValueError:
+        pass
+
+    return None
+
+  def get_square_number_from_indice(self, cell_index):
+    for square_list_index in self.square_indices:
+      try:
+        if square_list_index.index(cell_index) >= 0:
+          return square_list_index[0]
+      except ValueError:
+        pass
+
+    return None
 
 my_solver = SudokuSolver('003020600900305001001806400008102900700000008006708200002609500800203009005010300')
 print(my_solver)
-my_solver.read_in_square_indices()
-# my_solver.solve()
+
+my_solver.solve()
 # The file has newlines at the end of each line, so we call
 # String#chomp to remove them.
 # game = SudokuSolver(board_string)
 # # Remember: this will just fill out what it can and not "guess"
 # game.solve
-
