@@ -1,3 +1,5 @@
+import os
+import csv
 
 class SudokuSolver:
   def __init__(self, board_string):
@@ -6,7 +8,13 @@ class SudokuSolver:
 
   
   def solve(self):
-    pass
+    
+    index_of_current_cell_to_guess = 0
+    while True:
+      current_attempt = self.get_next_attempt(index_of_current_cell_to_guess)
+      
+      # print(f"current attempt {current_attempt}, current_cell: {self.empty_cells_and_attempts[index_of_current_cell_to_guess][0]}")
+      break
     # Set current_cell_to_guess = 0
     # this will be used to track the current_guess
     # Loop through the list of empty cells iteratively (as tracked by current_cell_to_guess) until the last cell's guess is valid
@@ -103,9 +111,55 @@ class SudokuSolver:
 
   def clear_all_attempts(self, index):
     self.empty_cells_and_attempts[index][1] = []
-  
+
+  #takes in a cell number and returns the row number
+  def get_row_number_from_cell(self, index):
+    pass
+
+  def read_in_row_indices(self):
+    row_indices_list = []
+    my_path = os.path.abspath(os.path.dirname(__file__))
+    path = os.path.join(my_path, "row_indices.csv")
+
+    with open(path, mode = 'r', encoding='utf-8-sig') as csvfile:
+      reader = csv.reader(csvfile)
+      for row in reader:
+        row = [int(i) for i in row]
+        row_indices_list.append(row)
+    
+    return row_indices_list
+        
+  def read_in_column_indices(self):
+    column_indices_list = []
+    my_path = os.path.abspath(os.path.dirname(__file__))
+    path = os.path.join(my_path, "column_indices.csv")
+
+    with open(path, mode = 'r', encoding='utf-8-sig') as csvfile:
+      reader = csv.reader(csvfile)
+      for row in reader:
+        row = [int(i) for i in row]
+        column_indices_list.append(row)
+    
+    return column_indices_list
+
+  def read_in_square_indices(self):
+    square_indices_list = []
+    my_path = os.path.abspath(os.path.dirname(__file__))
+    path = os.path.join(my_path, "square_indices.csv")
+
+    with open(path, mode = 'r', encoding='utf-8-sig') as csvfile:
+      reader = csv.reader(csvfile)
+      for row in reader:
+        row = [int(i) for i in row]
+        square_indices_list.append(row)
+    
+    return square_indices_list
+
+
 my_solver = SudokuSolver('003020600900305001001806400008102900700000008006708200002609500800203009005010300')
 print(my_solver)
+my_solver.read_in_square_indices()
+# my_solver.solve()
 # The file has newlines at the end of each line, so we call
 # String#chomp to remove them.
 # game = SudokuSolver(board_string)
