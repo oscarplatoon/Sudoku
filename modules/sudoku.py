@@ -151,7 +151,7 @@ class SudokuSolver:
   def read_in_row_indices(self):
     row_indices_list = []
     my_path = os.path.abspath(os.path.dirname(__file__))
-    path = os.path.join(my_path, "./data/row_indices.csv")
+    path = os.path.join(my_path, "../data/row_indices.csv")
 
     with open(path, mode = 'r', encoding='utf-8-sig') as csvfile:
       reader = csv.reader(csvfile)
@@ -164,7 +164,7 @@ class SudokuSolver:
   def read_in_column_indices(self):
     column_indices_list = []
     my_path = os.path.abspath(os.path.dirname(__file__))
-    path = os.path.join(my_path, "./data/column_indices.csv")
+    path = os.path.join(my_path, "../data/column_indices.csv")
 
     with open(path, mode = 'r', encoding='utf-8-sig') as csvfile:
       reader = csv.reader(csvfile)
@@ -177,7 +177,7 @@ class SudokuSolver:
   def read_in_square_indices(self):
     square_indices_list = []
     my_path = os.path.abspath(os.path.dirname(__file__))
-    path = os.path.join(my_path, "./data/square_indices.csv")
+    path = os.path.join(my_path, "../data/square_indices.csv")
 
     with open(path, mode = 'r', encoding='utf-8-sig') as csvfile:
       reader = csv.reader(csvfile)
@@ -220,11 +220,11 @@ class SudokuSolver:
 
     return None
 
-my_solver = SudokuSolver('003020600900305001001806400008102900700000008006708200002609500800203009005010300')
-print(my_solver)
+# my_solver = SudokuSolver('003020600900305001001806400008102900700000008006708200002609500800203009005010300')
+# print(my_solver)
 
-my_solver.solve()
-print(my_solver)
+# my_solver.solve()
+# print(my_solver)
 # The file has newlines at the end of each line, so we call
 # String#chomp to remove them.
 # game = SudokuSolver(board_string)
