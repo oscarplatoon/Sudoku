@@ -13,7 +13,7 @@ class SudokuSolver:
     
     index_of_current_empty_cell_to_guess = 0
     # while True:
-    for i in range(10000):
+    while True:
       current_attempt = self.get_next_attempt(index_of_current_empty_cell_to_guess)
       current_board_index = self.empty_cells_and_attempts[index_of_current_empty_cell_to_guess][0]
 
@@ -220,16 +220,3 @@ class SudokuSolver:
 
     return None
 
-# my_solver = SudokuSolver('003020600900305001001806400008102900700000008006708200002609500800203009005010300')
-# print(my_solver)
-
-# my_solver.solve()
-# print(my_solver)
-# The file has newlines at the end of each line, so we call
-# String#chomp to remove them.
-# game = SudokuSolver(board_string)
-# # Remember: this will just fill out what it can and not "guess"
-# game.solve
-# print(my_solver.get_row(18))
-# print(my_solver.get_column(5))
-# print(my_solver.get_square(57))
