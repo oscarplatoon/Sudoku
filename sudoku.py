@@ -38,7 +38,7 @@ class SudokuSolver:
 
     # find where the 3x3 box starts  by using floor division to throw away remainder then multiply by 3 to find index
     # 1//3 = 0 -> *3 = 0 -> iterate 0 -> 3 excluding 3 with range i.e. 0,1,2
-    # 5//3 = 1 -> *3 = 3 -> iterate 3 -> 6 excluding 6 with range i.e. 3,4,6
+    # 5//3 = 1 -> *3 = 3 -> iterate 3 -> 6 excluding 6 with range i.e. 3,4,5
     # this lets us check the 3 x 3 grid that our self.grid[r][c] value is in
     r_start = (r//3) * 3
     c_start = (c//3) * 3
