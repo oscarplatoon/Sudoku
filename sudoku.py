@@ -25,7 +25,7 @@ class SudokuSolver:
       print(row)
 
   # checking if it's possible to place n in each row, column, or 3x3 grid
-  def is_possible(self,r,c,n):
+  def grid_check(self,r,c,n):
     # iterate through each digit in row & try to find n
     # if n is found return false..this means u can't put n in your current row
     for i in range(0,9):
@@ -56,11 +56,10 @@ class SudokuSolver:
       for c in range(9):
         # if a 0 (empty space) is found check what number can possibly go in there 1-9
         if self.grid[r][c] == 0:
-
           # n is our number that we're guessing could be correct
           for n in range(1,10):
-            #if we find a number that isn't in same row, column, or grid
-            if self.is_possible(r,c,n):
+            #if we find a number that isn't in same row, column, or grid (if grid_check returns true)
+            if self.grid_check(r,c,n):
               #set the space in grid equal to number
               self.grid[r][c] = n
               #call solve fxn again recursively
