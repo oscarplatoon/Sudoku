@@ -1,6 +1,8 @@
 from methods import Methods
+import os
+import csv
 
-board_input = '003020600900305001001806400008102900700000008006708200002609500800203009005010300'
+board_input = '030050040008010500460000012070502080000603000040109030250000098001020600080060020'
 
 class SudokuSolver:
     # board represented as a grid a1 through i9
@@ -26,9 +28,15 @@ class SudokuSolver:
                 self.count += 1
 
     def print_board(self):
+        # for number in self.rows:
+        #     for letter in self.columns:
+        #         print(f"{letter}{number}: {self.board[f'{letter}{number}']}")
         for number in self.rows:
             for letter in self.columns:
-                print(f"{letter}{number}: {self.board[f'{letter}{number}']}")
+                if len(self.board[f'{letter}{number}']) != 1:
+                    return(False)            
+        return(True)
+        
             
         
     def solve(self):
@@ -38,19 +46,38 @@ class SudokuSolver:
                     Methods.check_column(self,f'{letter}{number}')
                     Methods.check_row(self,f'{letter}{number}')
                     Methods.check_box(self,f'{letter}{number}')
-        
+            Methods.naked_subset_rows(self)
+            Methods.naked_subset_columns(self)
+            Methods.naked_subset_box(self)
+            Methods.hidden_subset_rows(self)
+            Methods.hidden_subset_rows(self)
+            
 
     def board(self):
         pass
 
-game = SudokuSolver(board_input)
-game.solve()
-game.print_board()
+    @classmethod
+    def objects(cls):
+        input_boards = []
+        my_path = os.path.abspath(os.path.dirname(__file__))
+        path = os.path.join(my_path, "sample_sudoku_board_inputs.csv")
+        with open(path) as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                input_boards.append(row)
+        return input_boards
 
-        # The file has newlines at the end of each line, so we call
-        # String#chomp to remove them.
-        # game = SudokuSolver(board_string)
-        # # Remember: this will just fill out what it can and not "guess"
-        # game.solve
+input_boards = SudokuSolver.objects()
+solved_count, failed_count = 0,0
+for x in input_boards:
+    game = SudokuSolver(x[0])
+    game.solve()
+    if game.print_board() == True:
+        solved_count += 1
+    elif game.print_board() == False:
+        failed_count += 1
+print(f'Solved: {solved_count}\tFailed: {failed_count}')
+
+
 
         # print(game.board)
